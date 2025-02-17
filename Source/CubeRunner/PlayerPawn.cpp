@@ -3,6 +3,7 @@
 
 #include "PlayerPawn.h"
 
+#include "RunnerPlayerController.h"
 #include "SAdvancedRotationInputBox.h"
 #include "GameFramework/GameModeBase.h"
 #include "Kismet/GameplayStatics.h"
@@ -19,7 +20,7 @@ void APlayerPawn::Tick(float DeltaSeconds)
 
 void APlayerPawn::Move(float Value)
 {
-	
+	if (CameraShake!=nullptr) GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(CameraShake);
 	if (Value > 0)
 	{
 		CurrentMovePositionIndex++;
@@ -42,8 +43,11 @@ void APlayerPawn::ProcessDamage()
 	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn::ProcessDamage - %d"),Health);
 	if(Health<=0)
 	{
-		AGameModeBase* GameMode = UGameplayStatics::GetGameMode(this);
-		//GameMode->EndPlay(EEndPlayReason::Destroyed);
+		Cast<ARunnerPlayerController>(GetController())->EndGame();
+	}else
+	{
+		OnPlayerLivesChangedEvent.Broadcast(Health);
+		OnHit();
 	}
-	OnPlayerLivesChangedEvent.Broadcast(Health);
+	
 }

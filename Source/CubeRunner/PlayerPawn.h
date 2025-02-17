@@ -23,6 +23,8 @@ public:
 	void Jump();
 	void ProcessDamage();
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnHit();
 	UPROPERTY(BlueprintAssignable)
 	FOnPlayerLivesChangedSignature OnPlayerLivesChangedEvent;
 	UPROPERTY(VisibleAnywhere, Category = Movement)
@@ -31,6 +33,10 @@ public:
 	float StepDistance;
 	UPROPERTY(EditAnywhere, Category = Movement)
 	float MoveSpeed;
-	UPROPERTY(EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere, Category = "Stats", BlueprintReadOnly)
 	int Health =5;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Camera Shakes")
+	TSubclassOf<UCameraShakeBase> CameraShake;
 };

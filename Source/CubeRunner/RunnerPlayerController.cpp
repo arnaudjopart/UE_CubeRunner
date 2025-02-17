@@ -71,6 +71,10 @@ void ARunnerPlayerController::AddPointToScore()
 	OnScoreChangedDelegate.Broadcast(Score);
 }
 
+void ARunnerPlayerController::EndGame()
+{
+}
+
 void ARunnerPlayerController::StartGame()
 {
 	UE_LOG(LogTemp, Warning, TEXT("ARunnerPlayerController::StartGame"));

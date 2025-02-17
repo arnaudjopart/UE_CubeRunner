@@ -64,4 +64,5 @@ public:
 	int Score;
 
 	void AddPointToScore();
+	void EndGame();
 };
