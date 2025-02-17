@@ -28,15 +28,7 @@ void ARunnerPlayerController::BeginPlay()
 	{
 		DisableInput(this);
 	}
-	/*TArray<AActor*> Result;
-	UGameplayStatics::GetAllActorsOfClass(this,ACameraActor::StaticClass(),Result);
-	if (Result.Num() > 0)
-	{
-		if (Result[0] != nullptr)
-		{
-			SetViewTargetWithBlend(Result[0]);
-		}
-	}*/
+	
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle,this, &ARunnerPlayerController::StartGame,StarTimerDuration,false);
 	StartTimer(StarTimerDuration);

@@ -9,20 +9,28 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerLivesChangedSignature, int32, NewScore);
 
 UCLASS()
 class CUBERUNNER_API APlayerPawn : public AGamePawnBase
 {
 	GENERATED_BODY()
 
+
 public:
 	void Tick(float DeltaSeconds) override;
 	void Move(float Value);
 	void Jump();
+	void ProcessDamage();
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPlayerLivesChangedSignature OnPlayerLivesChangedEvent;
 	UPROPERTY(VisibleAnywhere, Category = Movement)
 	int CurrentMovePositionIndex;
 	UPROPERTY(EditAnywhere, Category = Movement)
 	float StepDistance;
 	UPROPERTY(EditAnywhere, Category = Movement)
 	float MoveSpeed;
+	UPROPERTY(EditAnywhere, Category = "Stats")
+	int Health =5;
 };

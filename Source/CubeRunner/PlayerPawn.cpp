@@ -4,6 +4,8 @@
 #include "PlayerPawn.h"
 
 #include "SAdvancedRotationInputBox.h"
+#include "GameFramework/GameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 void APlayerPawn::Tick(float DeltaSeconds)
 {
@@ -17,7 +19,7 @@ void APlayerPawn::Tick(float DeltaSeconds)
 
 void APlayerPawn::Move(float Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn::Move - %f"),Value);
+	
 	if (Value > 0)
 	{
 		CurrentMovePositionIndex++;
@@ -32,4 +34,16 @@ void APlayerPawn::Move(float Value)
 void APlayerPawn::Jump()
 {
 	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn::Jump"));
+}
+
+void APlayerPawn::ProcessDamage()
+{
+	Health--;
+	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn::ProcessDamage - %d"),Health);
+	if(Health<=0)
+	{
+		AGameModeBase* GameMode = UGameplayStatics::GetGameMode(this);
+		//GameMode->EndPlay(EEndPlayReason::Destroyed);
+	}
+	OnPlayerLivesChangedEvent.Broadcast(Health);
 }
