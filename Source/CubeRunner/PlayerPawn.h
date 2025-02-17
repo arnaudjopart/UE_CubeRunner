@@ -39,4 +39,6 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Shakes")
 	TSubclassOf<UCameraShakeBase> CameraShake;
+	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
+	class USoundBase* MoveSound;
 };

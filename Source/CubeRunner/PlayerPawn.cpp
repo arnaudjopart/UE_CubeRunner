@@ -20,6 +20,7 @@ void APlayerPawn::Tick(float DeltaSeconds)
 
 void APlayerPawn::Move(float Value)
 {
+	if (MoveSound!= nullptr) UGameplayStatics::PlaySoundAtLocation(this,MoveSound,GetActorLocation());
 	if (CameraShake!=nullptr) GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(CameraShake);
 	if (Value > 0)
 	{
