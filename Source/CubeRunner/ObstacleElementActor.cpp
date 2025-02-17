@@ -29,3 +29,13 @@ void AObstacleElementActor::ReactToComponentOverlap(UPrimitiveComponent* Overlap
 		RunnerPlayer->ProcessDamage();
 	}
 }
+
+void AObstacleElementActor::ApplyPoint()
+{
+	CurrentController->AddPointToScore();
+}
+
+void AObstacleElementActor::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+}

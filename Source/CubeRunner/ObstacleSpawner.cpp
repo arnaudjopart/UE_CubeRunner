@@ -27,7 +27,7 @@ void AObstacleSpawner::BeginPlay()
 
 	if(ARunnerPlayerController* RunnerPlayerController = Cast<ARunnerPlayerController>(Controller);RunnerPlayerController!=nullptr)
 	{
-		RunnerPlayerController->OnScoreChangedDelegate.AddDynamic(this, &AObstacleSpawner::StartSpawn);
+		RunnerPlayerController->OnTimerStartDelegate.AddDynamic(this, &AObstacleSpawner::StartSpawn);
 	}
 	
 	

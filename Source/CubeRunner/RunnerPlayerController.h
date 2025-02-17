@@ -13,7 +13,8 @@
  * 
  */
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnScoreChangedSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChangedSignature,float,Score);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTimerStartSignature);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStartGame,float,StartTimerLenght);
 
 UCLASS()
@@ -23,14 +24,8 @@ class CUBERUNNER_API ARunnerPlayerController : public APlayerController
 
 public:
 	ARunnerPlayerController();
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnScoreChangedSignature OnScoreChangedDelegate;
-
-	UPROPERTY(BlueprintAssignable, BlueprintCallable)
-	FOnStartGame OnStartGame;
+	
 protected:
-	UFUNCTION()
-	void OnScoreChanged();
 	virtual void BeginPlay() override;
 	void MovePlayer(const FInputActionValue& ActionValue);
 	void JumpPlayer();
@@ -38,7 +33,8 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartTimer(float TimerDuration);
-	
+
+
 	UPROPERTY(EditAnywhere)
 	UInputAction* MoveInpuAction;
 	UPROPERTY(EditAnywhere)
@@ -55,4 +51,17 @@ protected:
 
 private:
 	APlayerPawn* PlayerPawn;
+
+public:
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnScoreChangedSignature OnScoreChangedDelegate;
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnTimerStartSignature OnTimerStartDelegate;
+	
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+	FOnStartGame OnStartGame;
+	int Score;
+
+	void AddPointToScore();
 };

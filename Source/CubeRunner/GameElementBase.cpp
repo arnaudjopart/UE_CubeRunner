@@ -3,6 +3,9 @@
 
 #include "GameElementBase.h"
 
+#include "RunnerPlayerController.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 AGameElementBase::AGameElementBase()
 {
@@ -37,6 +40,15 @@ void AGameElementBase::BeginPlay()
 	Super::BeginPlay();
 	Mesh->OnComponentHit.AddDynamic(this, &AGameElementBase::ReactToComponentHit);
 	Mesh->OnComponentBeginOverlap.AddDynamic(this, &AGameElementBase::ReactToComponentOverlap);
+	APlayerController* Controller = UGameplayStatics::GetPlayerController(this,0);
+	if(ARunnerPlayerController* RunnerController = Cast<ARunnerPlayerController>(Controller); RunnerController!= nullptr)
+	{
+		CurrentController = RunnerController;
+	}
+}
+
+void AGameElementBase::ApplyPoint()
+{
 }
 
 // Called every frame
@@ -46,6 +58,12 @@ void AGameElementBase::Tick(float DeltaTime)
 	FVector Location = GetActorLocation();
 	Location+= FVector(-Speed*DeltaTime,0,0);
 	SetActorLocation(Location);
+
+	if(Location.X<0)
+	{
+		ApplyPoint();
+		Destroy();
+	}
 
 }
 

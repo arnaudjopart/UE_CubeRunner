@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "RunnerPlayerController.h"
 #include "GameFramework/Actor.h"
 #include "GameElementBase.generated.h"
 
@@ -27,8 +28,11 @@ protected:
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(EditAnywhere)
 	float Speed=500;
+	ARunnerPlayerController* CurrentController;
+	virtual void ApplyPoint();
 
-public:	
+public:
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void SetSpeed(float SpawnSpeed);

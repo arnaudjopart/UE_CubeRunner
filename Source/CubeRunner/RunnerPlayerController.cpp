@@ -12,10 +12,7 @@ ARunnerPlayerController::ARunnerPlayerController()
 {
 }
 
-void ARunnerPlayerController::OnScoreChanged()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Score Changed"));
-}
+
 
 void ARunnerPlayerController::BeginPlay()
 {
@@ -32,7 +29,6 @@ void ARunnerPlayerController::BeginPlay()
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle,this, &ARunnerPlayerController::StartGame,StarTimerDuration,false);
 	StartTimer(StarTimerDuration);
-	OnScoreChangedDelegate.AddDynamic(this,&ARunnerPlayerController::OnScoreChanged);
 	OnStartGame.Broadcast(5);
 }
 
@@ -68,9 +64,16 @@ void ARunnerPlayerController::SetupInputComponent()
 	}
 }
 
+void ARunnerPlayerController::AddPointToScore()
+{
+	Score++;
+	UE_LOG(LogTemp,Display,TEXT("ARunnerPlayerController::AddPointToScore"))
+	OnScoreChangedDelegate.Broadcast(Score);
+}
+
 void ARunnerPlayerController::StartGame()
 {
 	UE_LOG(LogTemp, Warning, TEXT("ARunnerPlayerController::StartGame"));
 	EnableInput(this);
-	OnScoreChangedDelegate.Broadcast();
+	OnTimerStartDelegate.Broadcast();
 }
