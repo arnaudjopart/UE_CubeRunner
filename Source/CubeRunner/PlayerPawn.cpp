@@ -11,9 +11,9 @@
 void APlayerPawn::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	FVector PlayerLocation = GetActorLocation();
-	FVector TargetPosition = FVector(PlayerLocation.X, CurrentMovePositionIndex*StepDistance, PlayerLocation.Z);
-	FVector NextPosition = FMath::Lerp(PlayerLocation, TargetPosition, DeltaSeconds*MoveSpeed);
+	const FVector PlayerLocation = GetActorLocation();
+	const FVector TargetPosition = FVector(PlayerLocation.X, CurrentMovePositionIndex*StepDistance, PlayerLocation.Z);
+	const FVector NextPosition = FMath::Lerp(PlayerLocation, TargetPosition, DeltaSeconds*MoveSpeed);
 	SetActorLocation(NextPosition);
 	
 }
@@ -41,7 +41,7 @@ void APlayerPawn::Jump()
 void APlayerPawn::ProcessDamage()
 {
 	Health--;
-	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn::ProcessDamage - %d"),Health);
+	if (CameraShake!=nullptr) GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(CameraShake);
 	if(Health<=0)
 	{
 		Cast<ARunnerPlayerController>(GetController())->EndGame();
