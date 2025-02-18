@@ -20,6 +20,7 @@ class CUBERUNNER_API APlayerPawn : public AGamePawnBase
 public:
 	void Tick(float DeltaSeconds) override;
 	void Move(float Value);
+	void Jump(float MaxHeight, float GroundHeight);
 	void Jump();
 	void ProcessDamage();
 
@@ -43,6 +44,7 @@ public:
 	float JumpGravity=980;
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float FallGravityMultiplier;
+	float FloorHeight;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Shakes")

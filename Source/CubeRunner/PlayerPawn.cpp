@@ -22,11 +22,11 @@ void APlayerPawn::Tick(float DeltaSeconds)
 		float AppliedGravity = JumpGravity;
 		if(VerticalSpeed<0) AppliedGravity*=FallGravityMultiplier;
 		VerticalSpeed-= AppliedGravity*DeltaSeconds;
-		if(NextPosition.Z<32 && VerticalSpeed<0)
+		if(NextPosition.Z<FloorHeight && VerticalSpeed<0)
 		{
 			UE_LOG(LogTemp, Display, TEXT("Stop Jump"));
 			IsJumping = false;
-			NextPosition.Z=32;
+			NextPosition.Z=FloorHeight;
 		}
 	}
 	
@@ -51,9 +51,19 @@ void APlayerPawn::Move(float Value)
 	}
 }
 
+void APlayerPawn::Jump(float MaxHeight, float GroundHeight)
+{
+	if(IsJumping==true) return;
+	FloorHeight = GroundHeight;
+	UE_LOG(LogTemp, Display, TEXT("Jump"));
+	IsJumping = true;
+	VerticalSpeed = FMath::Sqrt(MaxHeight*2*JumpGravity);
+}
+
 void APlayerPawn::Jump()
 {
 	if(IsJumping==true) return;
+	FloorHeight = 32;
 	UE_LOG(LogTemp, Display, TEXT("Jump"));
 	IsJumping = true;
 	VerticalSpeed = FMath::Sqrt(JumpHeight*2*JumpGravity);
