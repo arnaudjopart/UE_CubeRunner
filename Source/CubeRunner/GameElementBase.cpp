@@ -58,7 +58,7 @@ void AGameElementBase::Tick(float DeltaTime)
 	FVector Location = GetActorLocation();
 	Location+= FVector(-Speed*DeltaTime,0,0);
 	SetActorLocation(Location);
-
+	
 	if(Location.X<-100)
 	{
 		ApplyPoint();

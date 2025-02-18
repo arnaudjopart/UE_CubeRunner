@@ -13,8 +13,26 @@ void APlayerPawn::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	const FVector PlayerLocation = GetActorLocation();
 	const FVector TargetPosition = FVector(PlayerLocation.X, CurrentMovePositionIndex*StepDistance, PlayerLocation.Z);
-	const FVector NextPosition = FMath::Lerp(PlayerLocation, TargetPosition, DeltaSeconds*MoveSpeed);
+	FVector NextPosition = FMath::Lerp(PlayerLocation, TargetPosition, DeltaSeconds*MoveSpeed);
+
+	if(IsJumping)
+	{
+		UE_LOG(LogTemp, Display, TEXT("Jumping"));
+		NextPosition.Z+=VerticalSpeed*DeltaSeconds;
+		float AppliedGravity = JumpGravity;
+		if(VerticalSpeed<0) AppliedGravity*=FallGravityMultiplier;
+		VerticalSpeed-= AppliedGravity*DeltaSeconds;
+		if(NextPosition.Z<32 && VerticalSpeed<0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("Stop Jump"));
+			IsJumping = false;
+			NextPosition.Z=32;
+		}
+	}
+	
+
 	SetActorLocation(NextPosition);
+	
 	
 }
 
@@ -35,7 +53,10 @@ void APlayerPawn::Move(float Value)
 
 void APlayerPawn::Jump()
 {
-	UE_LOG(LogTemp, Warning, TEXT("PlayerPawn::Jump"));
+	if(IsJumping==true) return;
+	UE_LOG(LogTemp, Display, TEXT("Jump"));
+	IsJumping = true;
+	VerticalSpeed = FMath::Sqrt(JumpHeight*2*JumpGravity);
 }
 
 void APlayerPawn::ProcessDamage()
@@ -44,7 +65,7 @@ void APlayerPawn::ProcessDamage()
 	if (CameraShake!=nullptr) GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(CameraShake);
 	if(Health<=0)
 	{
-		Cast<ARunnerPlayerController>(GetController())->EndGame();
+		Cast<ARunnerPlayerController>(GetController())->EndGame(this);
 	}else
 	{
 		OnPlayerLivesChangedEvent.Broadcast(Health);

@@ -29,8 +29,6 @@ void AObstacleSpawner::BeginPlay()
 	{
 		RunnerPlayerController->OnTimerStartDelegate.AddDynamic(this, &AObstacleSpawner::StartSpawn);
 	}
-	
-	
 }
 
 // Called every frame

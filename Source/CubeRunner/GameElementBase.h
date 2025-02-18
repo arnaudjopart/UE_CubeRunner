@@ -26,7 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Mesh;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Speed=500;
 	ARunnerPlayerController* CurrentController;
 	virtual void ApplyPoint();

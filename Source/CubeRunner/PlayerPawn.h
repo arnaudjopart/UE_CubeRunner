@@ -35,6 +35,14 @@ public:
 	float MoveSpeed;
 	UPROPERTY(EditAnywhere, Category = "Stats", BlueprintReadOnly)
 	int Health =5;
+	bool IsJumping;
+	float VerticalSpeed;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float JumpHeight = 300;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float JumpGravity=980;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float FallGravityMultiplier;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Shakes")

@@ -7,6 +7,7 @@
 #include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
+#include "GameFramework/GameModeBase.h"
 
 ARunnerPlayerController::ARunnerPlayerController()
 {
@@ -71,8 +72,11 @@ void ARunnerPlayerController::AddPointToScore()
 	OnScoreChangedDelegate.Broadcast(Score);
 }
 
-void ARunnerPlayerController::EndGame()
+void ARunnerPlayerController::EndGame(AActor* Actor)
 {
+	Actor->Destroy();
+	UGameplayStatics::GetGameMode(this)->ResetLevel();
+	
 }
 
 void ARunnerPlayerController::StartGame()
