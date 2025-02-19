@@ -4,10 +4,10 @@
 #include "RunnerPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "PlayerPawn.h"
-#include "Camera/CameraActor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
-#include "GameFramework/GameModeBase.h"
+#include "Blueprint/UserWidget.h"
+
 
 ARunnerPlayerController::ARunnerPlayerController()
 {
@@ -23,6 +23,8 @@ void ARunnerPlayerController::RestartGame()
 void ARunnerPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner)
 {
 	Super::GameHasEnded(EndGameFocus, bIsWinner);
+	if (UUserWidget* GameOverMenu = CreateWidget(this, GameOverWidgetClass); GameOverMenu!=nullptr) GameOverMenu->AddToViewport();
+
 	FTimerHandle TimeHandler;
 	GetWorld()->GetTimerManager().SetTimer(TimeHandler, this, &ARunnerPlayerController::RestartGame,5);
 }

@@ -7,7 +7,9 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystemInterface.h"
 #include "PlayerPawn.h"
+#include "Blueprint/UserWidget.h"
 #include "RunnerPlayerController.generated.h"
+
 
 /**
  * 
@@ -35,6 +37,8 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void StartTimer(float TimerDuration);
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> GameOverWidgetClass;
 
 	UPROPERTY(EditAnywhere)
 	UInputAction* MoveInpuAction;
@@ -45,7 +49,7 @@ protected:
 	UPROPERTY(EditAnywhere)
 	ACameraActor* CameraActor;
 	AActor* MainCameraActor;
-	//UFUNCTION()
+
 	void StartGame();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
