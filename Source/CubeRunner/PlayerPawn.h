@@ -18,6 +18,10 @@ class CUBERUNNER_API APlayerPawn : public AGamePawnBase
 
 
 public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumpEnd();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnJumpSart();
 	void Tick(float DeltaSeconds) override;
 	void Move(float Value);
 	void Jump(float MaxHeight, float GroundHeight);

@@ -15,7 +15,9 @@ ARunnerPlayerController::ARunnerPlayerController()
 
 void ARunnerPlayerController::RestartGame()
 {
-	RestartLevel();
+	FName PlayerName = FName("TestLevel");
+	UGameplayStatics::OpenLevel(this,PlayerName);
+	//RestartLevel();
 }
 
 void ARunnerPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner)
@@ -42,11 +44,7 @@ void ARunnerPlayerController::BeginPlay()
 	UGameplayStatics::GetAllActorsWithTag(this,"MainCamera",OutActors);
 	if (OutActors.Num()>0)
 	{
-		if (OutActors[0]!=nullptr)
-		{
-			UE_LOG(LogTemp, Display, TEXT("Found Camera"));
-			MainCameraActor = OutActors[0];
-		}
+		if (OutActors[0]!=nullptr) MainCameraActor = OutActors[0];
 	}
 	
 	FTimerHandle TimerHandle;

@@ -4,8 +4,6 @@
 #include "PlayerPawn.h"
 
 #include "RunnerPlayerController.h"
-#include "SAdvancedRotationInputBox.h"
-#include "GameFramework/GameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
 void APlayerPawn::Tick(float DeltaSeconds)
@@ -24,7 +22,7 @@ void APlayerPawn::Tick(float DeltaSeconds)
 		VerticalSpeed-= AppliedGravity*DeltaSeconds;
 		if(NextPosition.Z<FloorHeight && VerticalSpeed<0)
 		{
-			UE_LOG(LogTemp, Display, TEXT("Stop Jump"));
+			OnJumpEnd();
 			IsJumping = false;
 			NextPosition.Z=FloorHeight;
 		}
@@ -55,6 +53,7 @@ void APlayerPawn::Move(float Value)
 void APlayerPawn::Jump(float MaxHeight, float GroundHeight)
 {
 	if(IsJumping==true) return;
+	OnJumpSart();
 	FloorHeight = GroundHeight;
 	UE_LOG(LogTemp, Display, TEXT("Jump"));
 	IsJumping = true;
@@ -64,6 +63,7 @@ void APlayerPawn::Jump(float MaxHeight, float GroundHeight)
 void APlayerPawn::Jump()
 {
 	if(IsJumping==true) return;
+	OnJumpSart();
 	FloorHeight = 32;
 	UE_LOG(LogTemp, Display, TEXT("Jump"));
 	IsJumping = true;
