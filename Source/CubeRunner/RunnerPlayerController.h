@@ -24,7 +24,8 @@ class CUBERUNNER_API ARunnerPlayerController : public APlayerController
 
 public:
 	ARunnerPlayerController();
-	
+	void RestartGame();
+	virtual void GameHasEnded(class AActor* EndGameFocus = nullptr, bool bIsWinner = false) override;
 protected:
 	virtual void BeginPlay() override;
 	void MovePlayer(const FInputActionValue& ActionValue);
@@ -43,6 +44,7 @@ protected:
 	UInputMappingContext* InputMappingContext;
 	UPROPERTY(EditAnywhere)
 	ACameraActor* CameraActor;
+	AActor* MainCameraActor;
 	//UFUNCTION()
 	void StartGame();
 

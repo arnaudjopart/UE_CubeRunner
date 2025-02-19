@@ -19,5 +19,6 @@ void AJumpSpot::ReactToComponentOverlap(UPrimitiveComponent* OverlappedComponent
 	if (APlayerPawn* MyPawn = Cast<APlayerPawn>(OtherActor);MyPawn!=nullptr)
 	{
 		MyPawn->Jump(MaxJumpHeight,FloorLevel);
+		MyPawn->EnableMovement(!DisablePlayerMovement);
 	}
 }

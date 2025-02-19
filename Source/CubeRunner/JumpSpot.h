@@ -21,4 +21,6 @@ public:
 	float FloorLevel = 300;
 	UPROPERTY(EditAnywhere, Category="Behaviour")
 	float MaxJumpHeight=500;
+	UPROPERTY(EditAnywhere, Category="Behaviour")
+	bool DisablePlayerMovement;
 };

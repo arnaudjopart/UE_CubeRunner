@@ -26,7 +26,7 @@ void ALevelChunck::Tick(float DeltaTime)
 	FVector Location = GetActorLocation();
 	Location.X-=MoveSpeed*DeltaTime;
 	SetActorLocation(Location);
-	if(Location.X<-Length)
+	if(Location.X<-(Length+Offset))
 	{
 		Destroy();
 	}

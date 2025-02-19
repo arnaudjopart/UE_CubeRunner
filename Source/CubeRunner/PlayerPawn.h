@@ -23,6 +23,7 @@ public:
 	void Jump(float MaxHeight, float GroundHeight);
 	void Jump();
 	void ProcessDamage();
+	void EnableMovement(bool Bool);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnHit();
@@ -36,19 +37,25 @@ public:
 	float MoveSpeed;
 	UPROPERTY(EditAnywhere, Category = "Stats", BlueprintReadOnly)
 	int Health =5;
-	bool IsJumping;
-	float VerticalSpeed;
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float JumpHeight = 300;
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float JumpGravity=980;
-	UPROPERTY(EditAnywhere, Category = "Movement")
-	float FallGravityMultiplier;
-	float FloorHeight;
+
+
+	
+
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Camera Shakes")
 	TSubclassOf<UCameraShakeBase> CameraShake;
 	UPROPERTY(EditDefaultsOnly, Category = "Sounds")
 	class USoundBase* MoveSound;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float FallGravityMultiplier;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float JumpHeight = 300;
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float JumpGravity=980;
+	float FloorHeight;
+	bool AllowsMovement = true;
+	bool IsJumping;
+	float VerticalSpeed;
+	
 };

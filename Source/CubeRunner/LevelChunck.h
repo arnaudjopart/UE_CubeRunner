@@ -28,4 +28,7 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float MoveSpeed;
 
+private:
+	UPROPERTY(EditAnywhere)
+	float Offset=500;
 };

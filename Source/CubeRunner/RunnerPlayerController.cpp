@@ -13,6 +13,17 @@ ARunnerPlayerController::ARunnerPlayerController()
 {
 }
 
+void ARunnerPlayerController::RestartGame()
+{
+	RestartLevel();
+}
+
+void ARunnerPlayerController::GameHasEnded(class AActor* EndGameFocus, bool bIsWinner)
+{
+	Super::GameHasEnded(EndGameFocus, bIsWinner);
+	FTimerHandle TimeHandler;
+	GetWorld()->GetTimerManager().SetTimer(TimeHandler, this, &ARunnerPlayerController::RestartGame,5);
+}
 
 
 void ARunnerPlayerController::BeginPlay()
@@ -25,6 +36,17 @@ void ARunnerPlayerController::BeginPlay()
 	else
 	{
 		DisableInput(this);
+	}
+
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsWithTag(this,"MainCamera",OutActors);
+	if (OutActors.Num()>0)
+	{
+		if (OutActors[0]!=nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("Found Camera"));
+			MainCameraActor = OutActors[0];
+		}
 	}
 	
 	FTimerHandle TimerHandle;
@@ -75,8 +97,10 @@ void ARunnerPlayerController::AddPointToScore()
 void ARunnerPlayerController::EndGame(AActor* Actor)
 {
 	Actor->Destroy();
-	UGameplayStatics::GetGameMode(this)->ResetLevel();
+	TArray<AActor*> OutActors;
+	//if (OutActors[0]!=nullptr)	SetViewTargetWithBlend(MainCameraActor);
 	
+	GameHasEnded(MainCameraActor,0);
 }
 
 void ARunnerPlayerController::StartGame()
